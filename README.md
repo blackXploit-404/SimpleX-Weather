@@ -22,35 +22,11 @@ A simple weather application that allows users to get current weather informatio
 - A modern web browser
 - Internet connection
 
-### Installation
-
-1. Clone the repository:
-
-    ```
-    git clone https://github.com/yourusername/weather-app.git
-    ```
-
-2. Navigate to the project directory:
-
-    ```
-    cd weather-app
-    ```
-
-3. Open the `index.html` file in your web browser:
-
-    ```
-    open index.html
-    ```
-
 ## Usage
 
 1. Enter the name of the city in the input box.
 2. Click the "Get Weather" button.
 3. Wait for the weather information to be displayed.
-
-## Screenshots
-
-(Include a screenshot of your application here)
 
 ## Project Structure
 weather-app/ │ ├── index.html ├── style.css ├── script.js └── favicon.ico
