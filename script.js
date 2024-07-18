@@ -24,9 +24,13 @@ function displayWeather(data) {
     weatherInfo.innerHTML = `
         <h3>Weather in ${data.location.name}, ${data.location.country}</h3>
         <p><strong>Temperature:</strong> ${data.current.temp_c}°C</p>
+        <p><strong>Feels Like:</strong> ${data.current.feelslike_c}°C</p>
         <p><strong>Condition:</strong> ${data.current.condition.text}</p>
         <p><strong>Humidity:</strong> ${data.current.humidity}%</p>
         <p><strong>Wind:</strong> ${data.current.wind_kph} kph</p>
+        <p><strong>Pressure:</strong> ${data.current.pressure_mb} mb</p>
+        <p><strong>Visibility:</strong> ${data.current.vis_km} km</p>
+        <p><strong>UV Index:</strong> ${data.current.uv}</p>
         <img src="${data.current.condition.icon}" alt="Weather icon">
     `;
 }
