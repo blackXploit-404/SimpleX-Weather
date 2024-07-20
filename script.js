@@ -4,11 +4,13 @@ const button = document.getElementById("search_btn");
 const input = document.getElementById("city_input");
 const weatherInfo = document.getElementById("weather_info");
 
+let previousWeather = null;
+
 async function getData(city) {
-    const promise = await fetch(
+    const response = await fetch(
         `https://api.weatherapi.com/v1/current.json?key=77c2892120b04ec8b9092115240307&q=${city}&aqi=yes`
     );
-    return await promise.json();
+    return await response.json();
 }
 
 button.addEventListener('click', async () => {
@@ -16,7 +18,7 @@ button.addEventListener('click', async () => {
     weatherInfo.innerHTML = '<div class="loading"></div>'; // Show loading animation
     const result = await getData(value);
     displayWeather(result);
-    sendNotification(result);
+    checkWeatherChange(result);
 });
 
 function displayWeather(data) {
@@ -38,8 +40,26 @@ function displayWeather(data) {
     `;
 }
 
+function checkWeatherChange(data) {
+    if (data.error) return;
+
+    if (previousWeather === null) {
+        previousWeather = data;
+        return;
+    }
+
+    const currentCondition = data.current.condition.text;
+    const previousCondition = previousWeather.current.condition.text;
+
+    if (currentCondition !== previousCondition) {
+        sendNotification(data);
+    }
+
+    previousWeather = data;
+}
+
 function sendNotification(data) {
-    if (data.error || Notification.permission !== "granted") return;
+    if (Notification.permission !== "granted") return;
 
     const notification = new Notification("Weather Update", {
         body: `Current condition in ${data.location.name}: ${data.current.condition.text}, ${data.current.temp_c}°C`,
