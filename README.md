@@ -29,7 +29,7 @@ A simple weather application that allows users to get current weather informatio
 3. Wait for the weather information to be displayed.
 
 ## Project Structure
-weather-app/ │ ├── index.html ├── style.css ├── script.js └── favicon.ico
+weather-app/ │ ├── index.html ├── style.css ├── script.js └── cloudy.png as favicon
 
 ## API
 
@@ -45,4 +45,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-If you have any questions, feel free to open an issue or contact me directly at surajit@devsurajit.xyz
+If you have any questions, feel free to open an issue or contact me directly at hello@devsurajit.xyz
