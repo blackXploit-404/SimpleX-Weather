@@ -2,8 +2,6 @@ const button = document.getElementById("search_btn");
 const input = document.getElementById("city_input");
 const weatherInfo = document.getElementById("weather_info");
 
-let previousWeatherState = {};
-
 async function getData(city) {
     const promise = await fetch(
         `https://api.weatherapi.com/v1/current.json?key=77c2892120b04ec8b9092115240307&q=${city}&aqi=yes`
@@ -16,7 +14,6 @@ button.addEventListener('click', async () => {
     weatherInfo.innerHTML = '<div class="loading"></div>'; // Show loading animation
     const result = await getData(value);
     displayWeather(result);
-    sendNotification(result);
 });
 
 function displayWeather(data) {
@@ -37,40 +34,3 @@ function displayWeather(data) {
         <img src="${data.current.condition.icon}" alt="Weather icon">
     `;
 }
-
-function sendNotification(data) {
-    if (data.error || Notification.permission !== "granted") return;
-
-    const currentWeatherState = {
-        condition: data.current.condition.text,
-        temp: data.current.temp_c,
-    };
-
-    if (JSON.stringify(currentWeatherState) !== JSON.stringify(previousWeatherState)) {
-        const notification = new Notification("Weather Update", {
-            body: `Current condition in ${data.location.name}: ${data.current.condition.text}, ${data.current.temp_c}°C`,
-            icon: data.current.condition.icon
-        });
-
-        notification.addEventListener("error", () => {
-            alert("Error displaying notification");
-        });
-
-        previousWeatherState = currentWeatherState;
-    }
-}
-
-// Request notification permission on page load
-document.addEventListener('DOMContentLoaded', () => {
-    if (Notification.permission !== "granted") {
-        Notification.requestPermission();
-    }
-});        });
-    }
-}
-
-// Request notification permission on page load
-document.addEventListener('DOMContentLoaded', () => {
-    requestNotificationPermission();
-});    }
-});
