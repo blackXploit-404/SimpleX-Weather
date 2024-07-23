@@ -1,8 +1,8 @@
-// scripts.js
-
 const button = document.getElementById("search_btn");
 const input = document.getElementById("city_input");
 const weatherInfo = document.getElementById("weather_info");
+
+let previousWeatherState = {};
 
 async function getData(city) {
     const promise = await fetch(
@@ -41,14 +41,23 @@ function displayWeather(data) {
 function sendNotification(data) {
     if (data.error || Notification.permission !== "granted") return;
 
-    const notification = new Notification("Weather Update", {
-        body: `Current condition in ${data.location.name}: ${data.current.condition.text}, ${data.current.temp_c}°C`,
-        icon: data.current.condition.icon
-    });
+    const currentWeatherState = {
+        condition: data.current.condition.text,
+        temp: data.current.temp_c,
+    };
 
-    notification.addEventListener("error", () => {
-        alert("Error displaying notification");
-    });
+    if (JSON.stringify(currentWeatherState) !== JSON.stringify(previousWeatherState)) {
+        const notification = new Notification("Weather Update", {
+            body: `Current condition in ${data.location.name}: ${data.current.condition.text}, ${data.current.temp_c}°C`,
+            icon: data.current.condition.icon
+        });
+
+        notification.addEventListener("error", () => {
+            alert("Error displaying notification");
+        });
+
+        previousWeatherState = currentWeatherState;
+    }
 }
 
 // Request notification permission on page load
